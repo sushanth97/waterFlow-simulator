@@ -60,11 +60,11 @@ export default Controller.extend({
         if (grid.isObstructor) {
             let locModel= model;
             let leftGrid = model[row-1][column-1];
-            if (!leftGrid.isObstructor || !leftGrid.isWaterFilled) {
+            if (leftGrid && (!leftGrid.isObstructor || !leftGrid.isWaterFilled)) {
                 locModel = this.processStimulation(model, row-1, column-1);
             }
             let rightGrid = model[row-1][column+1];
-            if (rightGrid.isObstructor || rightGrid.isWaterFilled) {
+            if (rightGrid && (rightGrid.isObstructor || rightGrid.isWaterFilled)) {
                 return model;
             }
             return this.processStimulation(locModel, row-1, column+1);
