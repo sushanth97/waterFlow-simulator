@@ -1,0 +1,15 @@
+.container-body {
+    margin: 10% 14% 10% 20%;
+}
+.grid {
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+}
+.slider {
+    -webkit-appearance: none;
+    border-bottom: 1px solid grey;
+}
+.slider::-webkit-slider-thumb {
+  cursor: pointer;
+}

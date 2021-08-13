@@ -1,2 +1,24 @@
- 
+
+
+<h3 class="pb-3">Grid Creation</h3>
+<div class="mb-3">Number of Rows</div>
+{{!-- move the below code to array and render--}}
+<div class="w-75 mb-4">
+    {{input type="range" min=0 max=10 value=simulatorData.columns class="w-100 slider"}}
+    <span>{{simulatorData.columns}}</span>
+    <div class="float-right">10</div>
+</div>
+<div class="mb-3 mt-4">Number of Columns</div>
+<div class="w-75 mb-4"> 
+    {{input type="range" min=0 max=10 value=simulatorData.rows class="w-100 mb-4 slider"}}
+    <span>{{simulatorData.rows}}</span>
+    <div class="float-right">10</div>
+</div>
+<div class="mb-3 mt-4">Number of Obstructions</div>
+<div class="w-75 mb-4">
+    {{input type="range" min=0 max=10 value=simulatorData.obstructor class="w-100 mb-4 slider"}}
+    <span>{{simulatorData.obstructor}}</span>
+    <div class="float-right">10</div>
+</div>    
+<div class="mt-5"><LinkTo @route="create" @tagName="button" class="btn btn-default border">Next</LinkTo></div>
 

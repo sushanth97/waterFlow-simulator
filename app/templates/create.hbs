@@ -1,0 +1,43 @@
+<div>Drag the Ostruction and place it inside grid</div>
+
+{{#dragabble-group as |dragabbleGroup|}}
+    <div class="row">
+        <div class="col-lg-8">
+            {{#if this.gridModel}}
+                {{#if this.canShowEntryGrid}}
+                    <div>
+                        {{#each this.columnArray as |item|}}
+                            <span class="grid border bg-primary" {{action "startStimulating" item}}></span>
+                        {{/each}}
+                    </div>
+                {{/if}}
+                {{#each this.gridModel as |row|}}
+                    <div>
+                        {{#each row as |column|}}
+                            {{#dragabbleGroup.item item=column draggable=column.isDraggable}}
+                                <span class="grid border {{if column.isDraggable 'bg-dark'}} {{if column.isWaterFilled 'bg-primary'}}" {{action 'markAsObstructor' column}}></span>
+                            {{/dragabbleGroup.item}}    
+                        {{/each}}
+                    </div>    
+                {{/each}}
+            {{/if}}    
+        </div>
+        <div class="col-lg-2">
+            <div class="row">
+                {{#if this.obstructorModel}}  
+                    {{#each this.obstructorModel as |obstructItem|}}
+                        <div class="col-lg-6">
+                            {{#dragabbleGroup.item item=obstructItem draggable=obstructItem.isDraggable}}
+                                <span class="grid border {{if obstructItem.isDraggable 'bg-dark'}}"></span>
+                            {{/dragabbleGroup.item}}     
+                        </div>    
+                    {{/each}}
+                {{/if}}    
+            </div>    
+        </div>    
+    </div>
+{{/dragabble-group}}       
+{{#link-to "application" class="btn btn-default"}}Back{{/link-to}}
+<button type="button" class="btn btn-default" {{action (mut canShowEntryGrid) true}} disabled={{this.isNoObstructionPresent}}>Start Simulation</button>
+    
+{{outlet}}
