@@ -3,16 +3,14 @@ import { set } from '@ember/object';
 
 export default Component.extend({
     attributeBindings: ['draggable'],
+    classNames: ['grid', 'float-left',],
     draggable: true,
-    tagName: 'span',
-    dragStart() {
-        this.set('item.isObstructor', false);
-    },
     dragLeave() {
         this.attrs.setDragEnteredItem(this.get('item'));
     },
     dragEnd() {
         this.set('item.isDraggable', false);
+        this.set('item.isObstructor', false);
         this.attrs.onElementDropped();
     }
 });

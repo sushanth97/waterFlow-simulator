@@ -1,34 +1,43 @@
-<div>Drag the Ostruction and place it inside grid</div>
+<div class="mb-5">
+    {{#if this.canShowEntryGrid}}
+        Select the waterflow start point by clicking on any of the blue boxes
+    {{else}}
+        Drag the Ostruction and place it inside grid  
+    {{/if}}    
+</div>
 
 {{#dragabble-group as |dragabbleGroup|}}
     <div class="row">
         <div class="col-lg-8">
             {{#if this.gridModel}}
                 {{#if this.canShowEntryGrid}}
-                    <div>
-                        {{#each this.columnArray as |item|}}
-                            <span class="grid border bg-primary" {{action "startStimulating" item}}></span>
+                    <div class="cb d-inline-block container-row">
+                        {{#each this.entryGridArray as |item index|}}
+                            <div class="grid container-column float-left border-bottom border-dark {{unless item.canShowColumn 'invisible'}} {{if item.isSelected 'bg-primary' 'bg-aliceblue'}}" {{action "setEntryPoint" item index}}></div>
                         {{/each}}
                     </div>
+                    <br>
                 {{/if}}
                 {{#each this.gridModel as |row|}}
-                    <div>
+                    <div class="cb container-row">
                         {{#each row as |column|}}
-                            {{#dragabbleGroup.item item=column draggable=column.isDraggable}}
-                                <span class="grid border {{if column.isDraggable 'bg-dark'}} {{if column.isWaterFilled 'bg-primary'}}" {{action 'markAsObstructor' column}}></span>
+                            {{#dragabbleGroup.item item=column draggable=column.isDraggable classNames="container-column"}}
+                                <span style={{if column.isWaterFilled column.style}} class="d-inline-block w-100 h-100 {{if column.isObstructor 'bg-dark'}} {{if column.isWaterFilled 'bg-primary animate-waterFlow'}}"></span>
                             {{/dragabbleGroup.item}}    
                         {{/each}}
                     </div>    
                 {{/each}}
-            {{/if}}    
+            {{else}}
+                <h5>Container details empty</h5>
+            {{/if}}   
         </div>
         <div class="col-lg-2">
             <div class="row">
                 {{#if this.obstructorModel}}  
                     {{#each this.obstructorModel as |obstructItem|}}
-                        <div class="col-lg-6">
-                            {{#dragabbleGroup.item item=obstructItem draggable=obstructItem.isDraggable}}
-                                <span class="grid border {{if obstructItem.isDraggable 'bg-dark'}}"></span>
+                        <div class="col-lg-6 mb-2">
+                            {{#dragabbleGroup.item item=obstructItem draggable=obstructItem.isDraggable classNames="border border-dark"}}
+                                <span class="d-inline-block w-100 h-100 {{if obstructItem.isObstructor 'bg-dark' 'bg-light'}}"></span>
                             {{/dragabbleGroup.item}}     
                         </div>    
                     {{/each}}
@@ -36,8 +45,14 @@
             </div>    
         </div>    
     </div>
-{{/dragabble-group}}       
-{{#link-to "application" class="btn btn-default"}}Back{{/link-to}}
-<button type="button" class="btn btn-default" {{action (mut canShowEntryGrid) true}} disabled={{this.isNoObstructionPresent}}>Start Simulation</button>
+{{/dragabble-group}}
+<div class="mt-4">   
+    {{#link-to "application" class="btn btn-default"}}Back{{/link-to}}
+    {{#if canShowReset}}
+        <button type="button" class="btn btn-default border border-dark" {{action 'resetSimulation'}}>Reset</button>
+    {{else}}
+        <button type="button" class="btn btn-default border border-dark" {{action (mut canShowEntryGrid) true}} disabled={{this.isNoObstructionPresent}}>Start Simulation</button>
+    {{/if}}    
+</div>      
     
 {{outlet}}
